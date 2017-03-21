@@ -1,0 +1,68 @@
+deque<int> q;
+stack<int> min, max;
+int e[n];
+
+for i=0 to n
+	if q.empty() 
+		q.push_front(e[i]);
+	else 
+		if e[i] <= q.front() && min.empty()						
+			q.push_front(e[i]);
+		else if e[i] < q.front() && min.top() > e[i] 		
+			
+			while min.top() > e[i] && !min.empty()
+				q.push_front(min.top());
+				min.pop();
+			end while	
+			min.push(e[i]);
+			
+		 else if e[i] < q.front() && min.top() <= e[i]
+			min.push(e[i]);
+		
+		 else if e[i] >= q.back() && max.empty()
+			q.push_back(e[i]);
+		 
+		 else if e[i] > q.back() && max.top() < e[i] 
+			
+			while max.top() < e[i] && !max.empty()
+				q.push_back(max.top());
+				max.pop();
+			end while
+			max.push(e[i]);
+		
+		else if e[i] > q.back() && max.top() >= e[i]
+			max.push(e[i]);
+		
+		else if e[i] > q.front() && e[i] < q.back()  
+			while e[i] > q.front() && e[i] < q.back()
+
+				min.push(q.front());
+				q.pop_front();
+			
+				max.push(q.back());
+				q.pop_back();
+			end while
+	
+			if q.empty()
+				q.push_front(e[i]);
+			else if e[i] <= q.front()
+				q.push_front(e[i]);
+			else 
+				q.push_back(e[i]);
+			end if
+			
+		end if	
+		
+	end if	
+
+end for
+
+while !min.empty()
+	q.push_front(min.top());
+	min.pop();
+end while
+
+while !max.empty() 
+	q.push_back(max.top());
+	max.pop();
+end while
